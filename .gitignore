@@ -1,3 +1,4 @@
 dataset/raw/*
 dataset/split/*
 dataset/quality_check/*
+dataset/export/*

@@ -5,7 +5,7 @@ from ultralytics import YOLO
 import os
 
 from model import PoseEstimationModel
-from filter import PoseKalmanFilter
+# from filter import PoseKalmanFilter
 from utility import visualize_pose, is_mp4_file, filter_by_color
 
 pose_estimation_model = None
@@ -20,6 +20,8 @@ orange_upper_bound = np.array([20, 255, 255])
 # Object dimensions (mm)
 real_dims = [49.0, 86.2, 94.4]
 dummy_dims = [48.7, 61.0, 81.0]
+cookie_dims = [44.5, 44.5, 11,7]
+pouch_dims = [181, 44.7, 44.5]
 
 def video_stream(source, headless=False, output=None):
     # Webcam or video initialization
@@ -51,7 +53,7 @@ def video_stream(source, headless=False, output=None):
                     break
 
                 annotated_frame, frame_rvecs, frame_tvecs = pose_estimation_model.estimate_pose(
-                    filter_by_color(frame, orange_lower_bound, orange_upper_bound), frame
+                    frame, frame
                 )
 
                 if len(frame_rvecs) == len(frame_tvecs) or len(frame_rvecs) != 0 or len(frame_tvecs) != 0:
@@ -101,9 +103,9 @@ def parse_arguments():
         help="Path to YOLO model file (e.g., /path/to/model.pt)."
     )
     parser.add_argument(
-        "--callibration",
+        "--calibration",
         required=True,
-        help="Path to .npz calibration data (e.g., /path/to/callibration.npz)."
+        help="Path to .npz calibration data (e.g., /path/to/calibration.npz)."
     )
     parser.add_argument(
         "--confidence",
@@ -133,8 +135,8 @@ def main():
     # Parse arguments
     args = parse_arguments()
 
-    # Load camera callibration data
-    data = np.load(args.callibration)
+    # Load camera calibration data
+    data = np.load(args.calibration)
     camera_matrix = data['camera_matrix']
     dist_coeffs = data['dist_coeffs']
 
@@ -147,7 +149,7 @@ def main():
         dist_coeffs=dist_coeffs
     )
 
-    pose_estimation_model.add_object('real', real_dims)
+    pose_estimation_model.add_object('cookie', cookie_dims)
 
     # Start webcam or video stream
     video_stream(args.input, args.headless, args.output)
