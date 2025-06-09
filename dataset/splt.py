@@ -59,14 +59,12 @@ def copy_labels(images_dir, destination, label_root):
                 shutil.copy(label_file, os.path.join(destination, new_label_name))
 
 def generate_yaml(dataset_path, dataset_name):
-    yaml_content = f"""train: ./train/images
+    yaml_content =f"""train: ./train/images
 val: ./val/images
-
-kpt_shape: [9, 3]
 
 nc: 1
 names:
-    0: real
+0: cookie
 """
     yaml_path = os.path.join(dataset_path, f"{dataset_name}.yaml")
     with open(yaml_path, "w") as yaml_file:
