@@ -2,7 +2,11 @@
 
 This Android application implements a real-time Oreo cookie detector using YOLO in an Augmented Reality environment. The app uses the trained TensorFlow Lite model to detect Oreo cookies in the camera feed and places virtual objects at their locations in AR space.
 
-![Demo Video](demo/demo_ar.mp4)
+
+
+https://github.com/user-attachments/assets/535911ea-dac5-4077-90e6-1b22413c2750
+
+
 
 ## Features
 
