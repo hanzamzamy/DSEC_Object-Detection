@@ -2,10 +2,20 @@ import argparse
 import cv2
 import numpy as np
 from ultralytics import YOLO
-from utility import is_mp4_file
 
 FRAME_WIDTH = 640
 FRAME_HEIGHT = 480
+
+def is_mp4_file(path):
+    """
+    Check if the given path is a video file.
+    :param path: Path to the file.
+    :return: True if the file is a MP4, False otherwise.
+    """
+    if not os.path.exists(path):
+        return False
+    # Check for file extensions
+    return path.lower().endswith('mp4')
 
 def detect_stream(model_path, confidence, source, headless=False, output=None):
     model = YOLO(model_path)
