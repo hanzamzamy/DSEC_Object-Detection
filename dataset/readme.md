@@ -2,6 +2,10 @@
 
 This section explains how the synthetic data generated in Blender is processed into a format suitable for training YOLO object detection models.
 
+
+https://github.com/user-attachments/assets/37b5aa78-f917-4bc1-9d0f-abd3e8914b4f
+
+
 ## Initial Data Structure
 
 The synthetic data is initially organized as follows:
@@ -97,3 +101,20 @@ By following this process, the synthetic data generated in Blender is transforme
 ## Exported Dataset
 
 Because the training process has done in Kaggle, the dataset also uploaded and can be accessed via this link: [Oreo Cookie Detection on Kaggle](https://www.kaggle.com/datasets/rayhanzamzamy/oreo-cookie-detection).
+
+## FAQ
+
+**Q: Why are many objects in dataset centered in the image? Doesn’t this limit model generalization?**
+
+**A:**
+We intentionally center many objects in our dataset to capture the full range of orientations without positional bias. Here's how we handle it:
+
+- **Balanced Design**: Approximately 50% of the dataset features centered objects with varying orientations, while the other 50% has fully random positions and orientations.
+
+- **Supervised Diversity**: Even the randomized data is supervised to ensure it covers all possible scenarios.
+
+- **Efficient Augmentation**: We use the **Ultralytics** Python library, which integrates **Albumentations** for fast, in-memory data augmentation (like shifts, scales, and rotations).
+
+- **Performance over Disk Loading**: Adding more positional variety by manually sourcing disk images increases dataset size and load time, whereas Albumentations keeps training fast and efficient.
+
+- **Final Outcome**: Despite some data starting centered, the model sees diverse, augmented data during training. This can be verified from the spread in the training log and the model’s performance.
