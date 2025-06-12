@@ -5,6 +5,18 @@ import argparse
 from pathlib import Path
 
 def parse_args():
+    """
+    Parse command line arguments for the dataset splitting script.
+    
+    Sets up argument parsing for required and optional parameters:
+    - datasource_path: Path to the source dataset directory
+    - dataset_name: Name for the output dataset folder and YAML file
+    - split_ratio: Ratio for train/val split (default: 0.8)
+    - label_type: Type of label format to use from available options
+    
+    Returns:
+        argparse.Namespace: Parsed command-line arguments
+    """
     parser = argparse.ArgumentParser(description="Split dataset for YOLO keypoint training")
     parser.add_argument("--datasource_path", type=str, required=True, help="Path to the source dataset directory")
     parser.add_argument("--dataset_name", type=str, required=True, help="Name of the dataset (used as output folder and YAML filename)")
@@ -15,6 +27,32 @@ def parse_args():
     return parser.parse_args()
 
 def create_dirs(base_path):
+    """
+    Create the standard YOLO directory structure for training.
+    
+    Creates the following directory structure:
+    base_path/
+    ├── train/
+    │   ├── images/
+    │   └── labels/
+    └── val/
+        ├── images/
+        └── labels/
+    
+    Args:
+        base_path (str): Base directory where the dataset structure will be created
+        
+    Returns:
+        dict: Dictionary containing paths to all created directories:
+            - train_images: Path to training images directory
+            - val_images: Path to validation images directory
+            - train_labels: Path to training labels directory
+            - val_labels: Path to validation labels directory
+    
+    Note:
+        All directories are created with exist_ok=True to prevent errors
+        if the directories already exist.
+    """
     paths = {
         "train_images": os.path.join(base_path, "train/images"),
         "val_images": os.path.join(base_path, "val/images"),
@@ -26,6 +64,27 @@ def create_dirs(base_path):
     return paths
 
 def split_and_copy_images(images_root, subdirs, split_ratio, output_paths):
+    """
+    Split images from multiple subdirectories and copy them to train/val directories.
+    
+    For each subdirectory:
+    1. Lists all JPG images
+    2. Randomly shuffles the images
+    3. Splits images according to the provided ratio
+    4. Copies to train/val directories with modified filenames that preserve source information
+    
+    Args:
+        images_root (str): Root directory containing image subdirectories
+        subdirs (list): List of subdirectory names to process
+        split_ratio (float): Ratio of images to use for training (0.0-1.0)
+        output_paths (dict): Dictionary containing paths to output directories
+            - train_images: Path where training images will be copied
+            - val_images: Path where validation images will be copied
+    
+    Notes:
+        - Destination filenames are prefixed with subdirectory name: "{subdir}-{original_name}"
+        - This naming scheme allows for tracking the image source while ensuring uniqueness
+    """
     for subdir in subdirs:
         subdir_path = os.path.join(images_root, subdir)
         images = [f for f in os.listdir(subdir_path) if f.endswith(".jpg")]
@@ -44,6 +103,27 @@ def split_and_copy_images(images_root, subdirs, split_ratio, output_paths):
             shutil.copy(os.path.join(subdir_path, img), os.path.join(output_paths["val_images"], new_name))
 
 def copy_labels(images_dir, destination, label_root):
+    """
+    Copy label files to match the corresponding images in the dataset.
+    
+    For each image file:
+    1. Extracts the image ID from the filename
+    2. Determines the corresponding label file path
+    3. Copies the label file to the destination with a matching name pattern
+    
+    This function handles special cases for background images:
+    - Regular images use labels from {label_root}/{img_id}.txt
+    - Background images (prefixed with "BG_") use a special "bg.txt" label file
+    
+    Args:
+        images_dir (str): Directory containing image files
+        destination (str): Directory where label files should be copied
+        label_root (str): Root directory containing source label files
+    
+    Note:
+        The function expects image filenames in the format "{subdir}-{original_name}"
+        where the original name contains the numeric ID used for label lookup.
+    """
     for img_file in os.listdir(images_dir):
         if img_file.endswith(".jpg"):
             img_id = img_file.split("-")[-1].split(".")[0]
@@ -59,6 +139,20 @@ def copy_labels(images_dir, destination, label_root):
                 shutil.copy(label_file, os.path.join(destination, new_label_name))
 
 def generate_yaml(dataset_path, dataset_name):
+    """
+    Generate a YAML configuration file for YOLO training.
+    
+    Creates a YAML file with the following content:
+    - Paths to training and validation image directories
+    - Number of classes (nc)
+    - Class names
+    
+    Args:
+        dataset_path (str): Path to the dataset directory where YAML file will be saved
+        dataset_name (str): Name of the dataset (used for YAML filename)
+    
+    The resulting YAML file is saved as "{dataset_path}/{dataset_name}.yaml".
+    """
     yaml_content =f"""train: ./train/images
 val: ./val/images
 
@@ -71,6 +165,21 @@ names:
         yaml_file.write(yaml_content)
 
 def main():
+    """
+    Main function that orchestrates the dataset splitting process.
+    
+    Workflow:
+    1. Parse command line arguments
+    2. Set up paths for source dataset and output directories
+    3. Create the output directory structure
+    4. Get list of image subdirectories
+    5. Split and copy images from source to train/val directories
+    6. Copy corresponding label files for train/val images
+    7. Generate YAML configuration file for YOLO training
+    
+    The resulting dataset will follow the standard YOLO directory structure
+    with images and labels split according to the specified ratio.
+    """
     args = parse_args()
 
     # Exported variables
