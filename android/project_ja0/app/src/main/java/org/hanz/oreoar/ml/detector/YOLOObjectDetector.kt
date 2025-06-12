@@ -11,7 +11,6 @@ import org.tensorflow.lite.support.image.ImageProcessor
 import org.tensorflow.lite.support.image.ImageProcessor.Builder
 import org.tensorflow.lite.support.image.TensorImage
 import java.io.ByteArrayOutputStream
-import android.util.Log
 import kotlin.math.max
 import kotlin.math.min
 
@@ -40,9 +39,7 @@ class YOLOObjectDetector(
             val interpretOptions = Options()
             interpretOptions.setNumThreads(2) // Set number of threads for inference
             interpreter = Interpreter(modelBuffer, interpretOptions)
-            Log.d(TAG, "TFLite interpreter initialized successfully")
         } catch (e: Exception) {
-            Log.e(TAG, "Failed to load TFLite model", e)
             throw RuntimeException("Failed to load TFLite model", e)
         }
     }
@@ -57,7 +54,6 @@ class YOLOObjectDetector(
             val bitmap = imageToBitmap(image)
 
             if (bitmap == null) {
-                Log.e(TAG, "Failed to convert image to bitmap")
                 throw RuntimeException("Failed to convert image to bitmap")
             }
 
@@ -71,8 +67,6 @@ class YOLOObjectDetector(
                 .add(NormalizeOp(0f, 255f)) // Normalize to [0,1]
                 .build()
             tensorImage = imageProcessor.process(tensorImage)
-
-            Log.d(TAG, "Image processed: ${tensorImage.width}x${tensorImage.height}, shape=${tensorImage.tensorBuffer.shape.contentToString()}")
 
             val output: Array<Array<FloatArray>> =
                 Array(OUTPUT_BATCH) {
@@ -92,7 +86,6 @@ class YOLOObjectDetector(
 
             return detections
         } catch (e: Exception) {
-            Log.e(TAG, "Error processing image: " + e.message, e)
             throw RuntimeException("Error processing image: " + e.message, e)
         }
     }
@@ -253,8 +246,6 @@ class YOLOObjectDetector(
     }
 
     companion object {
-        private const val TAG = "ObjectDetector"
-
         // Model output tensor shape is [1, 5, 6300]
         private const val OUTPUT_BATCH = 1              // Single batch inference
         private const val OUTPUT_PREDICTIONS = 5        // 4 bounding box parameters + 1 confidence score

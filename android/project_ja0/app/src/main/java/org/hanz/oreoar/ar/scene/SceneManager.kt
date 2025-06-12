@@ -1,6 +1,5 @@
 package org.hanz.oreoar.ar.scene
 
-import android.util.Log
 import com.google.android.filament.Engine
 import com.google.ar.core.Coordinates2d
 import com.google.ar.core.Frame
@@ -40,10 +39,6 @@ class SceneManager(
             val mediaImage = frame.acquireCameraImage()
 
             objectDetector.processImage(mediaImage).forEach { detectedObject ->
-                Log.d(
-                    "MainActivity",
-                    "Detected object: ${detectedObject.label} with confidence ${detectedObject.confidence}"
-                )
 
                 val cpuCoordinates = floatArrayOf(detectedObject.center.x, detectedObject.center.y)
                 val viewCoordinates = FloatArray(2)
@@ -55,9 +50,6 @@ class SceneManager(
                     viewCoordinates
                 )
 
-                Log.d("MainActivity", "Original coordinates: ${cpuCoordinates[0]}, ${cpuCoordinates[1]}")
-                Log.d("MainActivity", "Transformed coordinates: ${viewCoordinates[0]}, ${viewCoordinates[1]}")
-
                 // Try to place object at detection position
                 objectManager?.placeObject(viewCoordinates[0], viewCoordinates[1], frame, childNodes, engine, materialLoader)
             }
@@ -65,7 +57,6 @@ class SceneManager(
             isProcessingFrame = false
             mediaImage.close()
         } catch (e: Exception) {
-            Log.e("MainActivity", "Error processing frame", e)
             isProcessingFrame = false
         }
     }
