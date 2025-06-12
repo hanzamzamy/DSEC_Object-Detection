@@ -13,15 +13,26 @@ import io.github.sceneview.loaders.MaterialLoader
 import io.github.sceneview.material.setColor
 import io.github.sceneview.node.Node
 import io.github.sceneview.node.SphereNode
+import io.github.sceneview.math.Position
 
+/** Manages AR objects in the scene, allowing for placement, selection, and removal.
+ *
+ * @property objectNodes List of currently placed object nodes.
+ * @property indicatorSize Size of the indicator sphere for new objects.
+ * @property marginSize Margin size to prevent overlapping objects.
+ */
 class ObjectManager(
-    private val objectNodes: MutableList<AnchorNode> = mutableListOf(),
     private var indicatorSize: Float = 0.01f,
+    val objectNodes: MutableList<AnchorNode> = mutableListOf(),
     var marginSize: Float = 0.03f
 ) {
-    private var selectedObjectNode by mutableStateOf<AnchorNode?>(null)
+    var selectedObjectNode by mutableStateOf<AnchorNode?>(null)
 
-    private fun selectObject(anchorNode: AnchorNode?) {
+    /** Gets the currently selected object node.
+     *
+     * @return The selected AnchorNode or null if none is selected.
+     */
+    fun selectObject(anchorNode: AnchorNode?) {
         // Deselect previous
         selectedObjectNode?.let { previous ->
             (previous.childNodes.firstOrNull() as? SphereNode)?.apply {
@@ -40,7 +51,12 @@ class ObjectManager(
         }
     }
 
-    private fun objectExistsNear(worldPosition: io.github.sceneview.math.Position): Boolean {
+    /** Checks if an object exists near the specified world position.
+     *
+     * @param worldPosition The position to check for nearby objects.
+     * @return True if an object exists within the margin size, false otherwise.
+     */
+    private fun objectExistsNear(worldPosition: Position): Boolean {
         return objectNodes.any { anchorNode ->
             // Calculate distance manually using Euclidean distance formula
             val dx = anchorNode.worldPosition.x - worldPosition.x
@@ -52,7 +68,11 @@ class ObjectManager(
         }
     }
 
-    private fun removeSelectedObject(childNodes: MutableList<Node>) {
+    /** Removes the currently selected object from the scene.
+     *
+     * @param childNodes The list of child nodes in the scene.
+     */
+    fun removeSelectedObject(childNodes: MutableList<Node>) {
         selectedObjectNode?.let {
             childNodes.remove(it)
             objectNodes.remove(it)
@@ -61,7 +81,16 @@ class ObjectManager(
         }
     }
 
-    private fun placeObject(
+    /** Places a new object in the scene at the specified screen coordinates.
+     *
+     * @param x The x coordinate on the screen.
+     * @param y The y coordinate on the screen.
+     * @param frame The current AR frame to use for hit testing.
+     * @param childNodes The list of child nodes in the scene.
+     * @param engine The Filament engine instance.
+     * @param materialLoader The MaterialLoader to create material instances.
+     */
+    fun placeObject(
         x: Float, y: Float,
         frame: Frame,
         childNodes: MutableList<Node>,

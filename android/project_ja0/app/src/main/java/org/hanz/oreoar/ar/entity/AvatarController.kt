@@ -1,6 +1,9 @@
 package org.hanz.oreoar.ar.entity
 
 import android.content.res.Resources
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.LifecycleCoroutineScope
 import com.google.android.filament.Engine
 import com.google.ar.core.Anchor
@@ -35,9 +38,11 @@ class AvatarController(
     private val defaultMovementSpeed: Float = 0.05f,
     private val defaultRotationSpeed: Float = 360f,
     private val defaultSmoothMovement: Boolean = true,
-    private var currentAnchorNode: AnchorNode? = null,
-    private var movementJob: kotlinx.coroutines.Job? = null
+    private var movementJob: kotlinx.coroutines.Job? = null,
+    var currentAnchorNode: AnchorNode? = null,
 ) {
+    var isAvatarWalking by mutableStateOf(false)
+
     /**
      * Moves the avatar to a new location defined by the provided anchor.
      *
@@ -49,7 +54,7 @@ class AvatarController(
      */
     fun moveAvatarToLocation(
         newAnchor: Anchor,
-        onMoveComplete: () -> Unit,
+        onMoveComplete: () -> Unit = {isAvatarWalking = false},
         movementSpeed: Float = defaultMovementSpeed,
         rotationSpeed: Float = defaultRotationSpeed,
         smoothMovement: Boolean = defaultSmoothMovement
@@ -175,7 +180,7 @@ class AvatarController(
      * @param rotationSpeed The speed of the avatar's rotation in degrees per second.
      * @param smoothMovement Whether to apply smooth transitions for movement and rotation.
      */
-    private fun navigateAvatarToObject(
+    fun navigateAvatarToObject(
         selectedNode: AnchorNode,
         safeDistance: Float,
         movementSpeed: Float = defaultMovementSpeed,
@@ -218,6 +223,8 @@ class AvatarController(
                         rotationSpeed = rotationSpeed,
                         smoothMovement = smoothMovement,
                         onMoveComplete = {
+                            isAvatarWalking = false
+
                             // Play react animation when reached the object
                             (avatarNode.childNodes.firstOrNull() as? ModelNode)?.let { modelNode ->
                                 modelNode.stopAnimation(modelNode.playingAnimations.keys.first())

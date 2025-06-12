@@ -25,14 +25,16 @@ import org.hanz.oreoar.ui.panel.ControlPanel
  * @param onPlaneRendererChanged Callback invoked when the plane renderer toggle button is clicked.
  */
 fun ScreenOverlay(
-    infoText: State<String>,
-    onRespawnClicked: () -> Unit,
+    infoText: String,
+    onRespawnClicked: () -> Unit = {},
     hasSelectedObject: Boolean = false,
     onAddObjectClicked: () -> Unit = {},
     onRemoveObjectClicked: () -> Unit = {},
     onNavigateToObjectClicked: () -> Unit = {},
     onPlaneRendererChanged: () -> Unit = {},
 ){
+
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -47,7 +49,7 @@ fun ScreenOverlay(
             textAlign = TextAlign.Center,
             fontSize = 28.sp,
             color = Color.White,
-            text = infoText.value
+            text = infoText
         )
 
         // Control panel at the bottom

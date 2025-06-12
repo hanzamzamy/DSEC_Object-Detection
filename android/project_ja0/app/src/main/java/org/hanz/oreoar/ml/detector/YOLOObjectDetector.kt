@@ -29,7 +29,8 @@ class YOLOObjectDetector(
     private val context: Context,
     modelFilePath: String = "detection_model.tflite",
     private val confidenceThreshold: Float = 0.85f,
-    private val iouThreshold: Float = 0.8f
+    private val iouThreshold: Float = 0.8f,
+    private val maxDetection: Int = 300
 ) {
     private val interpreter: Interpreter
 
@@ -177,7 +178,7 @@ class YOLOObjectDetector(
         boxes: List<FloatArray>,
         scores: List<Float>,
         iouThreshold: Float,
-        maxDet: Int = 300
+        maxDet: Int = maxDetection
     ): List<Int> {
         val indices = scores.indices.sortedByDescending { scores[it] }.toMutableList()
         val keep = mutableListOf<Int>()

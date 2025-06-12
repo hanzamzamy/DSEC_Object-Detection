@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Oreo AR</string>
+    <string name="point_your_phone_down">Point your device down to find surface</string>
+    <string name="tap_anywhere_to_add_model">Ready to interact</string>
 </resources>
