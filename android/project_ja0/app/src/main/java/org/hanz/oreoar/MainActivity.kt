@@ -11,6 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.lifecycleScope
 import org.hanz.oreoar.ui.theme.OreoARTheme
 
 class MainActivity : ComponentActivity() {
@@ -27,6 +28,10 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+    }
+
+    fun foo(){
+
     }
 }
 
