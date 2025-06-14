@@ -42,7 +42,7 @@ The project uses Blender to generate synthetic training data with automatic anno
 - Automatic generation of bounding box annotations
 - Support for different annotation formats (vertices, cuboids)
 
-More details on synthetic data section.
+More details on synthetic data ![section](/blender).
 
 ### 2. Dataset Preparation
 
@@ -53,7 +53,7 @@ The synthetic data is processed into a format suitable for YOLO training:
 - Generation of YOLO-compatible configuration files
 - Verification tools to ensure data quality
 
-More details on dataset section.
+More details on dataset ![section](/dataset).
 
 ### 3. Model Training
 
@@ -64,7 +64,7 @@ YOLOv11 models are trained on the prepared synthetic dataset:
 - Model export to TensorFlow Lite for mobile deployment
 - Inference testing on sample videos
 
-More details on model section.
+More details on model ![section](/model).
 
 ### 4. Android AR Implementation
 
@@ -75,7 +75,7 @@ The trained model is deployed in an Android AR application:
 - Interactive 3D avatar that navigates to detected objects
 - Modern UI with Jetpack Compose and Material3
 
-More details on Android implementation section.
+More details on Android implementation ![section](/android).
 
 ## 🔧 Getting Started
 
