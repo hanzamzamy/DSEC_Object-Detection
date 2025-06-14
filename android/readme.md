@@ -188,4 +188,4 @@ fun navigateAvatarToObject(targetNode: AnchorNode, margin: Float = 0f) {
 
 ## Acknowledgements
 
-The character 赤司ジュンコ (Akashi Junko), along with associated visual assets such as 3D models, textures, and sprites used in this project, are the intellectual property of ![Nexon Co., Ltd](https://www.nexon.com/). These materials are included strictly for non-commercial, academic, and experimental purposes, and no affiliation or endorsement is implied.
+The character 赤司ジュンコ (Akashi Junko), along with associated visual assets such as 3D models, textures, and sprites used in this project, are the intellectual property of [Nexon Co., Ltd](https://www.nexon.com/). These materials are included strictly for non-commercial, academic, and experimental purposes, and no affiliation or endorsement is implied.
