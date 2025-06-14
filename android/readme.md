@@ -1,6 +1,6 @@
 # Oreo Cookie Detector - Android AR Implementation
 
-This Android application implements a real-time Oreo cookie detector using YOLO in an Augmented Reality environment. The app uses the trained TensorFlow Lite model to detect Oreo cookies in the camera feed and places virtual objects at their locations in AR space. This video shows app demonstration. Object detection using YOLO triggered by button to maximize user experience by reducing lag by inferencing model, and help device to preserve battery and computational resource for smooth AR experience. Further mechanism, such as object / avatar tracking, environment recognition, etc. handled by AR.
+This Android application implements a real-time Oreo cookie detector using YOLO in an Augmented Reality environment. The app uses the trained TensorFlow Lite model to detect Oreo cookies in the camera feed and places virtual objects at their locations in AR space. This video shows app demonstration. Object detection triggered by button to maximize user experience by reducing lag by inferencing model, and help device to preserve battery and computational resource for smooth AR experience. Further mechanism, such as object / avatar tracking, environment recognition, etc. handled by AR.
 
 
 
@@ -188,4 +188,4 @@ fun navigateAvatarToObject(targetNode: AnchorNode, margin: Float = 0f) {
 
 ## Acknowledgements
 
-The character 赤司ジュンコ (Akashi Junko), along with associated visual assets such as 3D models, textures, and sprites used in this project, are the intellectual property of ![Nexon Games Co., Ltd](https://www.nexon.com/). These materials are included strictly for non-commercial, academic, and experimental purposes, and no affiliation or endorsement is implied.
+The character 赤司ジュンコ (Akashi Junko), along with associated visual assets such as 3D models, textures, and sprites used in this project, are the intellectual property of ![Nexon Co., Ltd](https://www.nexon.com/). These materials are included strictly for non-commercial, academic, and experimental purposes, and no affiliation or endorsement is implied.
