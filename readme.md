@@ -42,7 +42,7 @@ The project uses Blender to generate synthetic training data with automatic anno
 - Automatic generation of bounding box annotations
 - Support for different annotation formats (vertices, cuboids)
 
-More details on synthetic data ![section](/blender).
+More details on synthetic data [section](/blender).
 
 ### 2. Dataset Preparation
 
@@ -53,7 +53,7 @@ The synthetic data is processed into a format suitable for YOLO training:
 - Generation of YOLO-compatible configuration files
 - Verification tools to ensure data quality
 
-More details on dataset ![section](/dataset).
+More details on dataset [section](/dataset).
 
 ### 3. Model Training
 
@@ -64,7 +64,7 @@ YOLOv11 models are trained on the prepared synthetic dataset:
 - Model export to TensorFlow Lite for mobile deployment
 - Inference testing on sample videos
 
-More details on model ![section](/model).
+More details on model [section](/model).
 
 ### 4. Android AR Implementation
 
@@ -75,7 +75,7 @@ The trained model is deployed in an Android AR application:
 - Interactive 3D avatar that navigates to detected objects
 - Modern UI with Jetpack Compose and Material3
 
-More details on Android implementation ![section](/android).
+More details on Android implementation [section](/android).
 
 ## 🔧 Getting Started
 
@@ -121,4 +121,12 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ### Acknowledgements
 
-- [Nexon Games](https://www.nexon.com/) - For the character from [Blue Archive](https://bluearchive.nexon.com/) used in the AR implementation
+This project includes content derived from third-party intellectual property (IP) and/or registered trademark, used solely for non-commercial, academic, and experimental purposes:
+
+- **[Blue Archive](https://bluearchive.nexon.com/)**
+
+  Certain assets in this project, including character 3D models, textures, and animation, are reconstructed from Blue Archive. These are used exclusively for research and analysis, and no part of this work is intended to replicate, modify, distribute, or commercially exploit Nexon’s IP. All rights to these assets belong to Nexon Co., Ltd.
+
+- **[Oreo](https://www.oreo.com/)**
+
+  This project makes visual and textual reference to the Oreo® product, which is a registered trademark of Mondelez International, Inc. Such use is strictly for experimental purposes, with no affiliation, sponsorship, or endorsement implied.
