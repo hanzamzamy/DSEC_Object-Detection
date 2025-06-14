@@ -185,3 +185,7 @@ fun navigateAvatarToObject(targetNode: AnchorNode, margin: Float = 0f) {
 - Android device with AR Core support. SceneView need min. Android 9 SDK.
 - Camera permission
 - Stable lighting conditions for optimal detection
+
+## Acknowledgements
+
+The character 赤司ジュンコ (Akashi Junko), along with associated visual assets such as 3D models, textures, and sprites used in this project, are the intellectual property of ![Nexon Games Co., Ltd](https://www.nexon.com/). These materials are included strictly for non-commercial, academic, and experimental purposes, and no affiliation or endorsement is implied.
