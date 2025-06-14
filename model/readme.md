@@ -2,6 +2,10 @@
 
 This section covers the complete workflow of YOLO-based object detection system for Oreo cookies, from training through deployment to inference testing.
 
+
+https://github.com/user-attachments/assets/e3e3cff8-0f95-410b-b136-5afacecbd651
+
+
 ## Model Training
 
 ### Training Environment
