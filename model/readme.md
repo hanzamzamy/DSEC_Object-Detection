@@ -2,9 +2,7 @@
 
 This section covers the complete workflow of YOLO-based object detection system for Oreo cookies, from training through deployment to inference testing.
 
-
-https://github.com/user-attachments/assets/e3e3cff8-0f95-410b-b136-5afacecbd651
-
+![Training Result](trainval/v1/results.png)
 
 ## Model Training
 
@@ -29,6 +27,8 @@ After training, the model achieved strong performance on the synthetic dataset:
 | mAP50 | 0.995 |
 | Precision | 0.999 |
 | Recall | 0.992 |
+
+![Confusion Matrix](trainval/v1/confusion_matrix.png)
 
 ### Visualization and Analysis
 
@@ -57,6 +57,10 @@ The script supports various export configurations:
 - **Int8 quantization**: For improved performance on mobile devices. Require data for calibration.
 
 ## Inference Testing
+
+
+https://github.com/user-attachments/assets/e3e3cff8-0f95-410b-b136-5afacecbd651
+
 
 The exported model was tested using the `inference/test_detection.py` script on sample videos:
 
