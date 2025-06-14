@@ -1,6 +1,8 @@
 # Dataset Preparation for YOLO Training
 
-This section explains how the synthetic data generated in Blender is processed into a format suitable for training YOLO object detection models.
+This section explains how the synthetic data generated in Blender is processed into a format suitable for training YOLO object detection models. Video below is quick snapshot from annotated dataset.
+
+**Warning**: This video includes visualizations that contain **rapid flashing**, **jerky motion**, and **high-contrast visual**, which may potentially trigger seizures in individuals with **photosensitive epilepsy**. Viewer discretion is advised.
 
 
 https://github.com/user-attachments/assets/37b5aa78-f917-4bc1-9d0f-abd3e8914b4f
@@ -118,3 +120,7 @@ We intentionally center many objects in our dataset to capture the full range of
 - **Performance over Disk Loading**: Adding more positional variety by manually sourcing disk images increases dataset size and load time, whereas Albumentations keeps training fast and efficient.
 
 - **Final Outcome**: Despite some data starting centered, the model sees diverse, augmented data during training. This can be verified from the spread in the training log and the model’s performance.
+
+## Acknowledgements
+
+Oreo and its associated visual appearance are registered trademarks of [Mondelez International, Inc](https://www.mondelezinternational.com/). This project includes references to the Oreo product solely for non-commercial, experimental purposes, with no affiliation, sponsorship, or endorsement implied.
